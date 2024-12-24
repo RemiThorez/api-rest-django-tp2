@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-2s+_d5xhaypzzw0&)&t)=2ic_kyxtnswxv+g-*t(zvlf_yg1$o
 DEBUG = True
 
 ALLOWED_HOSTS = ['api-rest-tp2.onrender.com']
-
+PORT = os.getenv('PORT', 8000)
 
 # Application definition
 
