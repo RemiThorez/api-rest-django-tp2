@@ -100,7 +100,7 @@ SWAGGER_SETTINGS = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'MySql': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bd_gestion_rdv',
         'USER': 'admin',
@@ -108,7 +108,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     },
-    'sqlite':{
+    'default':{
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
