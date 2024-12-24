@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-2s+_d5xhaypzzw0&)&t)=2ic_kyxtnswxv+g-*t(zvlf_yg1$o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api-rest-tp2.onrender.com']
 
 
 # Application definition
