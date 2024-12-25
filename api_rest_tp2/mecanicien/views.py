@@ -43,7 +43,7 @@ def obtenir(requete,idMecanicien):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def obtenir(requete):
+def obtenirTout(requete):
     try:
         mecanicien = Mecanicien.objects
         mecanicien_serializer = MecanicienSerializerNoMdp(mecanicien, many=True)
@@ -63,7 +63,9 @@ def obtenir(requete):
 def supprimer(requete,idMecanicien):
     try:
         mecanicien = Mecanicien.objects.get(id=idMecanicien)
+        user = mecanicien.user
         mecanicien.delete()
+        user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     except Mecanicien.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -104,8 +106,8 @@ def connexion(requete):
     utilisateur = authenticate(username=nomUtilisateur, password=mdp)
 
     if utilisateur is not None:
-        estClient = hasattr(utilisateur, 'client')
         estMecanicien = hasattr(utilisateur, 'mecanicien')
+        estClient = hasattr(utilisateur, 'client')
 
         if not (estMecanicien):
             return Response(status=status.HTTP_403_FORBIDDEN)
@@ -116,7 +118,7 @@ def connexion(requete):
         jeton, creer = Token.objects.get_or_create(user=utilisateur)
 
         if not creer:
-            jeton_age = now() - jeton.creer
+            jeton_age = now() - jeton.created
             if jeton_age > timedelta(hours=2):
                 jeton.delete()
                 jeton = Token.objects.create(user=utilisateur)
@@ -124,7 +126,7 @@ def connexion(requete):
         return Response({
             "jeton": jeton.key,
             "expires_in": 7200,
-            "idClient": utilisateur.client.id
+            "idMecanicien": utilisateur.mecanicien.id
         }, status=status.HTTP_200_OK)
 
     return Response(status=status.HTTP_401_UNAUTHORIZED)
